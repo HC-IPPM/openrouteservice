@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ors-config
+  namespace: ors
+data:
+  application.properties: |
+    server.port=8082
+    server.error.whitelabel.enabled=false
+    server.servlet.context-path=/ors
+    server.tomcat.keep-alive-timeout=30000
+    spring.profiles.active=default
+    spring.mvc.servlet.path=/
+    springdoc.swagger-ui.enabled=true
+    springdoc.swagger-ui.path=/swagger-ui
+    springdoc.swagger-ui.tryItOutEnabled=true
+    springdoc.swagger-ui.filter=false
+    springdoc.swagger-ui.syntaxHighlight.activated=true
+    springdoc.swagger-ui.showExtensions=true
+    springdoc.api-docs.path=/v2/api-docs
+    springdoc.api-docs.version=OPENAPI_3_0
+    springdoc.packages-to-scan=org.heigit.ors
+    springdoc.pathsToMatch=/v2/**
+    logging.file.name=./logs/ors.log
+    logging.pattern.console=%d{yyyy-MM-dd HH:mm:ss} %highlight{%-7p} %style{%50t}{Cyan} %style{[ %-40.40c{1.} ]}{Bright Cyan}   %m%n
+    logging.pattern.file=%d{yyyy-MM-dd HH:mm:ss} %p [%-40.40c{1.}] - %m%n
+    logging.level.root=WARN
+    logging.level.org.heigit=INFO
+    ors.cors.allowed_origins=*
+    ors.cors.allowed_headers=Content-Type, X-Requested-With, accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization
+    ors.cors.preflight_max_age=600
+    ors.engine.source_file=/home/ors/files/alberta-latest.osm.pbf
+    ors.engine.graphs_root_path=/home/ors/graphs
+    ors.engine.elevation.cache_path=/home/ors/elevation_cache
+    ors.engine.profiles.car.enabled=true
+    ors.engine.profiles.walking.enabled=true
+    ors.engine.profiles.wheelchair.enabled=true
+    ors.engine.profiles.cycling-regular.enabled=true
+    ors.endpoints.routing.enabled=true
+    ors.endpoints.matrix.enabled=true
+    ors.endpoints.isochrones.enabled=true
+    ors.endpoints.isochrones.maximum_intervals=3
+    ors.endpoints.snap.enabled=true
+    ors.endpoints.elevation.enabled=true
+    ors.endpoints.optimization.enabled=true
+    ors.engine.profile_default.maximum_distance=500000
+    ors.engine.profile_default.maximum_distance_dynamic_weights=500000
+    ors.engine.profile_default.maximum_distance_avoid_areas=500000
+    ors.engine.profile_default.maximum_waypoints=50
+    ors.engine.profile_default.maximum_snapping_radius=400
+    ors.engine.profile_default.maximum_distance_alternative_routes=500000
+    ors.engine.profile_default.maximum_distance_round_trip_routes=500000

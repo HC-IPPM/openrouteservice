@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ors-app
+  namespace: ors
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ors-app
+  template:
+    metadata:
+      labels:
+        app: ors-app
+    spec:
+      serviceAccountName: ors-sa
+      initContainers:
+        - name: init-permissions
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs && chmod -R 777 /home/ors"]
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
+        - name: download-osm-data
+          image: google/cloud-sdk:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              mkdir -p /home/ors/files &&
+              gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
+              if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
+                echo "OSM file not downloaded!";
+                exit 1;
+              fi &&
+              ls -l /home/ors/files/alberta-latest.osm.pbf
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
+      containers:
+        - name: ors-app
+          image: openrouteservice/openrouteservice:v8.1.1
+          ports:
+            - containerPort: 8082
+            - containerPort: 9001
+          env:
+            - name: REBUILD_GRAPHS
+              value: "False"
+            - name: CONTAINER_LOG_LEVEL
+              value: "INFO"
+            - name: XMS
+              value: "1g"
+            - name: XMX
+              value: "2g"
+            - name: ADDITIONAL_JAVA_OPTS
+              value: ""
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
+            - name: config-volume
+              mountPath: /home/ors/config
+      volumes:
+        - name: ors-storage
+          persistentVolumeClaim:
+            claimName: ors-pvc
+        - name: config-volume
+          configMap:
+            name: ors-config
+            items:
+              - key: application.properties
+                path: application.properties

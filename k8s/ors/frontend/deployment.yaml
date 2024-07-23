@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ors-frontend
+  namespace: ors
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ors-frontend
+  template:
+    metadata:
+      labels:
+        app: ors-frontend
+    spec:
+      containers:
+        - name: ors-frontend
+          image: northamerica-northeast1-docker.pkg.dev/phx-01j3dtrkz4x/openrouteservice:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: ORS_API_URL
+              value: "http://ors-service.ors.svc.cluster.local:8080/ors/v2"
+            - name: PORT
+              value: "3000"
+          command: ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "src/server.ts"]
