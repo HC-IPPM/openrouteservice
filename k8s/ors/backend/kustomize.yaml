@@ -6,30 +6,27 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - service.yaml
-patches:
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: ors-app
-        namespace: ors
-      spec:
-        template:
-          spec:
-            containers:
-              - name: istio-proxy
-                image: auto
-                resources:
-                  requests:
-                    cpu: 50m
-                    memory: 52Mi
-                securityContext:
-                  runAsNonRoot: true
-                  allowPrivilegeEscalation: false
-    target:
-      kind: Deployment
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
       name: ors-app
       namespace: ors
+    spec:
+      template:
+        spec:
+          containers:
+            - name: istio-proxy
+              image: auto
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 52Mi
+              securityContext:
+                runAsNonRoot: true
+                allowPrivilegeEscalation: false
+patchesJson6902:
   - target:
       version: v1
       kind: ServiceAccount
@@ -37,6 +34,6 @@ patches:
       namespace: ors
     patch: |-
       - op: add
-        path: "/metadata/annotations"
+        path: /metadata/annotations
         value:
           iam.gke.io/gcp-service-account: ors-sa@phx-01j3dtrkz4x.iam.gserviceaccount.com
