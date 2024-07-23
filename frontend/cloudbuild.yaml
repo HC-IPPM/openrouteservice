@@ -1,5 +1,4 @@
 steps:
-  # Step 1: Generate the Docker image name and save to a workspace file
   - name: 'gcr.io/cloud-builders/docker'
     id: generate-image-name
     entrypoint: 'bash'
@@ -9,7 +8,6 @@ steps:
       - |
         echo "northamerica-northeast1-docker.pkg.dev/${PROJECT_ID}/openrouteservice/ui:$BRANCH_NAME-$SHORT_SHA-$(date +%s)" > /workspace/imagename
 
-  # Step 2: Build the Docker image if the branch is 'main'
   - name: 'gcr.io/cloud-builders/docker'
     id: build-if-main
     entrypoint: 'bash'
@@ -25,7 +23,6 @@ steps:
           exit 0
         fi
 
-  # Step 3: Push the Docker image to the registry if the branch is 'main'
   - name: 'gcr.io/cloud-builders/docker'
     id: push-if-main
     entrypoint: 'bash'
@@ -39,3 +36,6 @@ steps:
         else
           exit 0
         fi
+
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
