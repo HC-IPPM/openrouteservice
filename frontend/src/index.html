@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Alberta ORS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+  <script>
+    window.ORS_API_URL = '{{ORS_API_URL}}';
+  </script>
+  <div class="sidebar">
+    <h1>Alberta ORS</h1>
+    <div class="control-group">
+      <h3>Isochrones</h3>
+      <p>Isochrones represent areas that can be reached within a certain time from a starting point, given a specific mode of transportation.</p>
+      <label for="iso-profile">Profile:</label>
+      <select id="iso-profile">
+        <option value="driving-car">Driving Car</option>
+        <option value="foot-walking">Foot Walking</option>
+        <option value="wheelchair">Wheelchair</option>
+      </select>
+      <label for="iso-latitude">Latitude:</label>
+      <input type="text" id="iso-latitude" value="53.5444">
+      <label for="iso-longitude">Longitude:</label>
+      <input type="text" id="iso-longitude" value="-113.4909">
+      <label for="iso-range">Range (seconds):</label>
+      <input type="text" id="iso-range" value="300,600,900">
+      <button class="get-button" onclick="fetchIsochrones()">Get Isochrones</button>
+      <button class="clear-button" onclick="clearIsochrones()">Clear</button>
+      <div id="iso-feedback" class="feedback"></div>
+    </div>
+    <div class="control-group">
+      <h3>Routing</h3>
+      <p>Routing calculates the best route between a starting point and a destination, using a specified mode of transportation.</p>
+      <label for="route-profile">Profile:</label>
+      <select id="route-profile">
+        <option value="driving-car">Driving Car</option>
+        <option value="foot-walking">Foot Walking</option>
+        <option value="wheelchair">Wheelchair</option>
+      </select>
+      <label for="route-start-lat">Start Latitude:</label>
+      <input type="text" id="route-start-lat" value="53.522260">
+      <label for="route-start-lon">Start Longitude:</label>
+      <input type="text" id="route-start-lon" value="-113.526260">
+      <label for="route-end-lat">End Latitude:</label>
+      <input type="text" id="route-end-lat" value="53.506070">
+      <label for="route-end-lon">End Longitude:</label>
+      <input type="text" id="route-end-lon" value="-113.498150">
+      <button class="get-button" onclick="fetchRoute()">Get Route</button>
+      <button class="clear-button" onclick="clearRoutes()">Clear</button>
+      <div id="route-feedback" class="feedback"></div>
+    </div>
+    <div class="control-group">
+      <h3>Matrix</h3>
+      <p>Matrix provides travel distances and times between multiple points, useful for analyzing multiple routes and locations.</p>
+      <label for="matrix-profile">Profile:</label>
+      <select id="matrix-profile">
+        <option value="driving-car">Driving Car</option>
+        <option value="foot-walking">Foot Walking</option>
+        <option value="wheelchair">Wheelchair</option>
+      </select>
+      <label for="matrix-coordinates">Coordinates (lon,lat pairs):</label>
+      <input type="text" id="matrix-coordinates" value="-113.526260,53.522260;-113.498150,53.506070">
+      <label for="matrix-metrics">Metrics (distance,duration):</label>
+      <input type="text" id="matrix-metrics" value="distance,duration">
+      <button class="get-button" onclick="fetchMatrix()">Get Matrix</button>
+      <button class="clear-button" onclick="clearMatrix()">Clear</button>
+      <div id="matrix-feedback" class="feedback"></div>
+    </div>
+    <div class="control-group">
+      <h3>Snap</h3>
+      <p>Snap adjusts locations to the nearest roads or pathways, useful for aligning points to the transportation network.</p>
+      <label for="snap-profile">Profile:</label>
+      <select id="snap-profile">
+        <option value="driving-car">Driving Car</option>
+        <option value="foot-walking">Foot Walking</option>
+        <option value="wheelchair">Wheelchair</option>
+      </select>
+      <label for="snap-coordinates">Coordinates (lon,lat pairs):</label>
+      <input type="text" id="snap-coordinates" value="-113.526260,53.522260;-113.498150,53.506070">
+      <label for="snap-radius">Search Radius:</label>
+      <input type="text" id="snap-radius" value="1000">
+      <button class="get-button" onclick="fetchSnap()">Get Snap</button>
+      <button class="clear-button" onclick="clearSnap()">Clear</button>
+      <div id="snap-feedback" class="feedback"></div>
+    </div>
+  </div>
+  <div id="map-container">
+    <div id="map"></div>
+    <div id="loading" class="loading">Loading...</div>
+  </div>
+  <div class="response-section">
+    <h3>Response</h3>
+    <pre id="response-display"></pre>
+  </div>
+  <script src="scripts.js"></script>
+</body>
+</html>
