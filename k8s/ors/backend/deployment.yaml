@@ -36,7 +36,7 @@ spec:
           args:
             - |
               mkdir -p /home/ors/files &&
-              gsutil cp gs://alberta-osm-data/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
+              gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
               if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
                 echo "OSM file not downloaded!";
                 exit 1;
