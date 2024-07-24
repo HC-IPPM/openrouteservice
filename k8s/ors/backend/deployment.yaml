@@ -22,7 +22,7 @@ spec:
       initContainers:
         - name: init-permissions
           image: busybox
-          command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs && chmod -R 777 /home/ors"]
+          command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs /home/ors/.config/gcloud && chmod -R 777 /home/ors"]
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
@@ -32,6 +32,7 @@ spec:
           args:
             - |
               set -e
+              export CLOUDSDK_CONFIG=/home/ors/.config/gcloud
               mkdir -p /home/ors/files &&
               echo "Downloading OSM file..." &&
               gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
