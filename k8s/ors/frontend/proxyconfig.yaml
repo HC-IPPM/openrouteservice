@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ProxyConfig
+metadata:
+  name: proxy-config-ors
+  namespace: ors
+spec:
+  holdApplicationUntilProxyStarts: true
+  concurrency: 2
+  proxyMetadata:
+    ISTIO_META_DNS_CAPTURE: "true"
+    ISTIO_META_DNS_AUTO_ALLOCATE: "true"
+  tracing:
+    sampling: 100.0
+    zipkin:
+      address: "zipkin.istio-system:9411"
+  envoyAccessLogService:
+    address: "otel-collector.istio-system:55678"
+  envoyMetricsService:
+    address: "otel-collector.istio-system:55680"
+  proxyResources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
