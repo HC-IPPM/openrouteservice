@@ -3,3 +3,29 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: ors-frontend
+      namespace: ors
+    spec:
+      template:
+        spec:
+          containers:
+            - name: ors-frontend
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 200Mi
+            - name: istio-proxy
+              image: auto
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 120Mi
+              securityContext:
+                runAsNonRoot: true
+                allowPrivilegeEscalation: false
