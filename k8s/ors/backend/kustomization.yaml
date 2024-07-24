@@ -7,6 +7,7 @@ resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
+
 patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
@@ -15,6 +16,9 @@ patchesStrategicMerge:
       name: ors-app
       namespace: ors
     spec:
+      strategy:
+        type: Recreate
+        rollingUpdate: null
       template:
         spec:
           containers:
@@ -27,6 +31,7 @@ patchesStrategicMerge:
               securityContext:
                 runAsNonRoot: true
                 allowPrivilegeEscalation: false
+
 patchesJson6902:
   - target:
       version: v1
