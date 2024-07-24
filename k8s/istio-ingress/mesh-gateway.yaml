@@ -12,8 +12,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-      - "geocoder.alpha.phac.gc.ca"
-      - "es.geocoder.alpha.phac.gc.ca"
+      - "ors-sro.alpha.phac-aspc.gc.ca"
     tls:
       httpsRedirect: true
   - port:
@@ -21,8 +20,7 @@ spec:
       name: https
       protocol: HTTPS
     hosts:
-      - "geocoder.alpha.phac.gc.ca"
-      - "es.geocoder.alpha.phac.gc.ca"
+      - "ors-sro.alpha.phac-aspc.gc.ca"
     tls:
       mode: SIMPLE
       credentialName: tlskeys

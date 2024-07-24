@@ -1,0 +1,20 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: ors-frontend-virtual-service
+  namespace: ors
+spec:
+  hosts:
+  - "ors-sro.alpha.phac-aspc.gc.ca"
+  gateways:
+  - istio-ingress/mesh-gateway
+  http:
+  - name: gateway-to-ors-frontend
+    match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: ors-frontend-service.ors.svc.cluster.local
+        port:
+          number: 3000
