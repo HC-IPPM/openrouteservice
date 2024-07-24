@@ -17,8 +17,34 @@ spec:
         app: ors-app
       annotations:
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+        traffic.sidecar.istio.io/excludeOutboundPorts: "443"
     spec:
       serviceAccountName: gcs-access-sa
+      initContainers:
+        - name: init-permissions
+          image: busybox
+          command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs && chmod -R 777 /home/ors"]
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
+        - name: download-osm-data
+          image: google/cloud-sdk:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              mkdir -p /home/ors/files &&
+              echo "Downloading OSM file..." &&
+              gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
+              if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
+                echo "OSM file not downloaded!";
+                exit 1;
+              fi &&
+              echo "OSM file downloaded successfully." &&
+              ls -l /home/ors/files/alberta-latest.osm.pbf
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
       containers:
         - name: ors-app
           image: openrouteservice/openrouteservice:v8.1.1
@@ -41,10 +67,6 @@ spec:
               mountPath: /home/ors
             - name: config-volume
               mountPath: /home/ors/config
-          lifecycle:
-            postStart:
-              exec:
-                command: ["/bin/sh", "-c", "mkdir -p /home/ors/files && echo 'Downloading OSM file...' && gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf && if [ $? -ne 0 ]; then echo 'Failed to download OSM file'; exit 1; fi && echo 'OSM file downloaded successfully.' && ls -l /home/ors/files/alberta-latest.osm.pbf"]
           resources:
             requests:
               cpu: 500m
