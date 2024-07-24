@@ -5,6 +5,7 @@ metadata:
   namespace: ors
 spec:
   strategy:
+    rollingUpdate: null
     type: Recreate
   replicas: 1
   selector:
