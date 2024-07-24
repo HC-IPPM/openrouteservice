@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+  - virtualservice.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
