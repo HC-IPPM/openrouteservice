@@ -6,28 +6,28 @@ resources:
   - configmap.yaml
   - service.yaml
   - serviceaccount.yaml
-#   - deployment.yaml
+  - deployment.yaml
 
-# patchesStrategicMerge:
-#   - |-
-#     apiVersion: apps/v1
-#     kind: Deployment
-#     metadata:
-#       name: ors-app
-#       namespace: ors
-#     spec:
-#       template:
-#         spec:
-#           containers:
-#             - name: istio-proxy
-#               image: auto
-#               resources:
-#                 requests:
-#                   cpu: 50m
-#                   memory: 52Mi
-#               securityContext:
-#                 runAsNonRoot: true
-#                 allowPrivilegeEscalation: false
+patchesStrategicMerge:
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: ors-app
+      namespace: ors
+    spec:
+      template:
+        spec:
+          containers:
+            - name: istio-proxy
+              image: auto
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 52Mi
+              securityContext:
+                runAsNonRoot: true
+                allowPrivilegeEscalation: false
 
 patchesJson6902:
   - target:
