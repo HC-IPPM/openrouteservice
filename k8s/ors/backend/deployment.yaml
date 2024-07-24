@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: ors-app
   namespace: ors
+  annotations:
+    proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
 spec:
   replicas: 1
   selector:
@@ -12,6 +14,8 @@ spec:
     metadata:
       labels:
         app: ors-app
+      annotations:
+        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
     spec:
       serviceAccountName: ors-sa
       initContainers:

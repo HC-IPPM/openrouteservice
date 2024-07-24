@@ -22,8 +22,8 @@ patchesStrategicMerge:
               image: auto
               resources:
                 requests:
-                  cpu: 100m
-                  memory: 120Mi
+                  cpu: 50m
+                  memory: 52Mi
               securityContext:
                 runAsNonRoot: true
                 allowPrivilegeEscalation: false

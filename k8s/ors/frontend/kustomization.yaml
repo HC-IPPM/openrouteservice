@@ -18,8 +18,8 @@ patchesStrategicMerge:
             - name: ors-frontend
               resources:
                 requests:
-                  cpu: 100m
-                  memory: 200Mi
+                  cpu: 50m
+                  memory: 52Mi
             - name: istio-proxy
               image: auto
               resources:
