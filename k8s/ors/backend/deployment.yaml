@@ -35,19 +35,13 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              echo "Starting download-osm-data init container";
-              mkdir -p /home/ors/files;
-              echo "Directory /home/ors/files created";
-              echo "Listing GCS bucket contents with verbose logging:";
-              gsutil -m -D ls gs://alberta-osm/;
-              echo "Attempting to download OSM file with verbose logging:";
-              gsutil -m -D cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf;
+              mkdir -p /home/ors/files &&
+              gsutil cp gs://alberta-osm-data/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
               if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
                 echo "OSM file not downloaded!";
                 exit 1;
-              fi;
-              ls -l /home/ors/files/alberta-latest.osm.pbf;
-              echo "download-osm-data init container completed successfully";
+              fi &&
+              ls -l /home/ors/files/alberta-latest.osm.pbf
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
@@ -91,11 +85,11 @@ spec:
                 command: ["/bin/sh", "-c", "sleep 10"]
           resources:
             requests:
-              cpu: 100m
-              memory: 128Mi
+              cpu: 500m
+              memory: 1.2Gi
             limits:
               cpu: 1000m
-              memory: 1Gi
+              memory: 3Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
