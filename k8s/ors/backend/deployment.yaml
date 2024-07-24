@@ -32,12 +32,15 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
+              set -x
               mkdir -p /home/ors/files &&
-              gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
+              echo "Downloading OSM file..." &&
+              gsutil -D cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf 2>&1 | tee /home/ors/files/gsutil-debug.log &&
               if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
                 echo "OSM file not downloaded!";
                 exit 1;
               fi &&
+              echo "OSM file downloaded successfully." &&
               ls -l /home/ors/files/alberta-latest.osm.pbf
           volumeMounts:
             - name: ors-storage
