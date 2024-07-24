@@ -7,7 +7,6 @@ resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
-  - proxyconfig.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
