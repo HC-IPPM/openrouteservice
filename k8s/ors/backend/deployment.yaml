@@ -27,8 +27,6 @@ spec:
       initContainers:
         - name: init-permissions
           image: busybox
-          securityContext:
-            runAsUser: 1337
           command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs && chmod -R 777 /home/ors"]
           volumeMounts:
             - name: ors-storage
