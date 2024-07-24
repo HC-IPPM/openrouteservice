@@ -6,6 +6,7 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - service.yaml
+  - serviceaccount.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
