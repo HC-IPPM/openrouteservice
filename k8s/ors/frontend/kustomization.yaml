@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - proxyconfig.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
