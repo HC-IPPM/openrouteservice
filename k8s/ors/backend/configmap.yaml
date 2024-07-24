@@ -35,7 +35,6 @@ data:
     ors.engine.profiles.car.enabled=true
     ors.engine.profiles.walking.enabled=true
     ors.engine.profiles.wheelchair.enabled=true
-    ors.engine.profiles.cycling-regular.enabled=true
     ors.endpoints.routing.enabled=true
     ors.endpoints.matrix.enabled=true
     ors.endpoints.isochrones.enabled=true
