@@ -67,18 +67,6 @@ spec:
               mountPath: /home/ors
             - name: config-volume
               mountPath: /home/ors/config
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8082
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8082
-            initialDelaySeconds: 10
-            periodSeconds: 10
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
