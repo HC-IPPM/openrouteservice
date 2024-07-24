@@ -33,7 +33,7 @@ patchesJson6902:
   - target:
       version: v1
       kind: ServiceAccount
-      name: ors-sa
+      name: gcs-access-sa
       namespace: ors
     patch: |-
       - op: add

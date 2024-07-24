@@ -11,7 +11,6 @@ spec:
   selector:
     matchLabels:
       app: ors-app
-  progressDeadlineSeconds: 120
   template:
     metadata:
       labels:
@@ -21,8 +20,7 @@ spec:
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
         traffic.sidecar.istio.io/excludeOutboundPorts: "443"
     spec:
-      serviceAccountName: ors-sa
-      terminationGracePeriodSeconds: 60
+      serviceAccountName: gcs-access-sa
       initContainers:
         - name: init-permissions
           image: busybox
@@ -79,10 +77,6 @@ spec:
               port: 8082
             initialDelaySeconds: 10
             periodSeconds: 10
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/sh", "-c", "sleep 10"]
           resources:
             requests:
               cpu: 500m
