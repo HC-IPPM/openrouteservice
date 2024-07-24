@@ -15,7 +15,7 @@ spec:
       labels:
         app: ors-app
       annotations:
-        proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+        sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: ors-sa
       initContainers:
