@@ -5,9 +5,15 @@ metadata:
   namespace: ors
 spec:
   replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
   selector:
     matchLabels:
       app: ors-app
+  progressDeadlineSeconds: 120
   template:
     metadata:
       labels:
@@ -17,6 +23,7 @@ spec:
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
     spec:
       serviceAccountName: ors-sa
+      terminationGracePeriodSeconds: 60
       initContainers:
         - name: init-permissions
           image: busybox
@@ -83,6 +90,17 @@ spec:
               port: 8082
             initialDelaySeconds: 10
             periodSeconds: 10
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 10"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:

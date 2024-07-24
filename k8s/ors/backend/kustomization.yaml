@@ -16,9 +16,6 @@ patchesStrategicMerge:
       name: ors-app
       namespace: ors
     spec:
-      strategy:
-        type: Recreate
-        rollingUpdate: null
       template:
         spec:
           containers:
