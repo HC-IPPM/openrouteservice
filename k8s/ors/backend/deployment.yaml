@@ -32,10 +32,12 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              set -x
               mkdir -p /home/ors/files &&
               echo "Downloading OSM file..." &&
-              gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf 2>&1 | tee /home/ors/files/gsutil-debug.log &&
+              # Find the latest OSM file in the bucket
+              LATEST_FILE=$(gsutil ls gs://alberta-osm | sort | tail -n 1) &&
+              # Copy the latest OSM file to the shared volume
+              gsutil cp ${LATEST_FILE} /home/ors/files/alberta-latest.osm.pbf &&
               if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
                 echo "OSM file not downloaded!";
                 exit 1;
