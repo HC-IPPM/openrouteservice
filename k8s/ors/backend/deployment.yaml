@@ -6,10 +6,8 @@ metadata:
 spec:
   replicas: 1
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
+    rollingUpdate: null
+    type: Recreate
   selector:
     matchLabels:
       app: ors-app
@@ -21,6 +19,7 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "false"
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
+        traffic.sidecar.istio.io/excludeOutboundPorts: "443"
     spec:
       serviceAccountName: ors-sa
       terminationGracePeriodSeconds: 60
@@ -33,8 +32,6 @@ spec:
               mountPath: /home/ors
         - name: download-osm-data
           image: google/cloud-sdk:latest
-          securityContext:
-            runAsUser: 1337
           command: ["/bin/sh", "-c"]
           args:
             - |
