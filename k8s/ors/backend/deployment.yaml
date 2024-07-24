@@ -44,7 +44,7 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ["/bin/sh", "-c", "mkdir -p /home/ors/files && echo 'Downloading OSM file...' && gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/ && echo 'OSM file downloaded successfully.' && ls -l /home/ors/files/alberta-latest.osm.pbf"]
+                command: ["/bin/sh", "-c", "mkdir -p /home/ors/files && echo 'Downloading OSM file...' && gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf && if [ $? -ne 0 ]; then echo 'Failed to download OSM file'; exit 1; fi && echo 'OSM file downloaded successfully.' && ls -l /home/ors/files/alberta-latest.osm.pbf"]
           resources:
             requests:
               cpu: 500m
