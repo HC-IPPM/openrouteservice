@@ -44,8 +44,6 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-          securityContext:
-            runAsUser: 1337
       containers:
         - name: ors-app
           image: openrouteservice/openrouteservice:v8.1.1
