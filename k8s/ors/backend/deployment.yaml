@@ -15,7 +15,6 @@ spec:
       labels:
         app: ors-app
       annotations:
-        sidecar.istio.io/inject: "false"
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
         traffic.sidecar.istio.io/excludeOutboundPorts: "443"
     spec:
@@ -45,6 +44,8 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
+          securityContext:
+            runAsUser: 1337
       containers:
         - name: ors-app
           image: openrouteservice/openrouteservice:v8.1.1
