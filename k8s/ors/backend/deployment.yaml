@@ -6,7 +6,6 @@ metadata:
 spec:
   replicas: 1
   strategy:
-    rollingUpdate: null
     type: Recreate
   selector:
     matchLabels:
@@ -16,6 +15,7 @@ spec:
       labels:
         app: ors-app
       annotations:
+        sidecar.istio.io/inject: "false"
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'
         traffic.sidecar.istio.io/excludeOutboundPorts: "443"
     spec:
