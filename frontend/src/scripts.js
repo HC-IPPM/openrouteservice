@@ -98,8 +98,7 @@ function fetchIsochrones() {
   fetch(`${ORS_API_URL}/isochrones/${profile}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_API_KEY_HERE'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       locations: [[longitude, latitude]],
@@ -166,8 +165,7 @@ function fetchRoute() {
   fetch(`${ORS_API_URL}/directions/${profile}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_API_KEY_HERE'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       coordinates: [[startLon, startLat], [endLon, endLat]]
@@ -237,8 +235,7 @@ function fetchMatrix() {
   fetch(`${ORS_API_URL}/matrix/${profile}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_API_KEY_HERE'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       locations: coordinates,
@@ -314,8 +311,7 @@ function fetchSnap() {
   fetch(`${ORS_API_URL}/snap/${profile}`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer YOUR_API_KEY_HERE'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       locations: coordinates,
