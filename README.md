@@ -189,7 +189,7 @@ curl -X POST "https://ors-sro.alpha.phac-aspc.gc.ca/ors/v2/snap/driving-car" -H 
 
 ### Generating Isochrones
 
-1. Set the center location and range on the form.
+1. Enter the Lattitide and Lngitude.
 2. Click the button to generate isochrones.
 3. The reachable area will be displayed on the map and the JSON response will be shown.
 
@@ -230,7 +230,3 @@ Contributions are welcome! Please submit issues and pull requests for any improv
 ## License
 
 This project is licensed under the GPL-3.0 and LGPL-3.0 licenses. See the [LICENSE](LICENSE) file for more details.
-
----
-
-Feel free to adjust the content to better fit your specific setup and requirements.
