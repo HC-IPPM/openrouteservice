@@ -19,9 +19,25 @@ spec:
               number: 8080
     - match:
         - uri:
-            prefix: /
+            prefix: /static # This is an example, adjust based on your frontend's static assets path
       route:
         - destination:
-            host: ors-service.ors.svc.cluster.local
+            host: ors-frontend-service.ors.svc.cluster.local
             port:
-              number: 9001
+              number: 3000
+    - match:
+        - uri:
+            exact: / # This matches the root URL
+      route:
+        - destination:
+            host: ors-frontend-service.ors.svc.cluster.local
+            port:
+              number: 3000
+    - match:
+        - uri:
+            prefix: / # This matches all other paths not matched above
+      route:
+        - destination:
+            host: ors-frontend-service.ors.svc.cluster.local
+            port:
+              number: 3000
