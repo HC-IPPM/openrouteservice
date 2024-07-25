@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ors-frontend
-          image: northamerica-northeast1-docker.pkg.dev/phx-01j3dtrkz4x/openrouteservice/ui:main-45bd172-1721903001 # {"$imagepolicy": "flux-system:ors"}
+          image: northamerica-northeast1-docker.pkg.dev/phx-01j3dtrkz4x/openrouteservice/ui:main-22280d3-1721903596 # {"$imagepolicy": "flux-system:ors"}
           ports:
             - containerPort: 3000
           env:
