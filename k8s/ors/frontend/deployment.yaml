@@ -20,7 +20,7 @@ spec:
             - containerPort: 3000
           env:
             - name: ORS_API_URL
-              value: "https://ors-service.ors.svc.cluster.local:8080/ors/v2"
+              value: "https://ors-sro.alpha.phac-aspc.gc.ca/ors/v2"
             - name: PORT
               value: "3000"
           command: ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "src/server.ts"]
