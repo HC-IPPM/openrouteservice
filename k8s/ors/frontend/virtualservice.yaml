@@ -15,6 +15,7 @@ spec:
         prefix: /
     route:
     - destination:
-        host: ors-frontend-service.ors.svc.cluster.local
+        host: nginx-service.ors.svc.cluster.local
         port:
           number: 3000
+#         host: ors-frontend-service.ors.svc.cluster.local

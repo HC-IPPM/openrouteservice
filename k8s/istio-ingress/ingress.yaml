@@ -1,3 +1,4 @@
+# Service Configuration
 apiVersion: v1
 kind: Service
 metadata:
@@ -15,6 +16,7 @@ spec:
     port: 443
     targetPort: 8443
 ---
+# Deployment Configuration
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,7 +34,7 @@ spec:
       labels:
         # Set a unique label for the gateway. This is required to ensure Gateways can select this workload
         istio: ingressgateway
-        # Enable gateway injection. If connecting to a revisioned control plane, replace with "istio.io/rev: revision-name"
+        # Enable gateway injection. If connecting to a revisioned control plane, replace with "istio.io/rev: asm-managed-rapid"
         istio.io/rev: asm-managed-rapid
     spec:
       containers:
@@ -58,7 +60,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1337
 ---
-# Set up roles to allow reading credentials for TLS
+# RBAC Configuration for Secret Access
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
