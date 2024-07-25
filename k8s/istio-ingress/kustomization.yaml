@@ -6,11 +6,11 @@ resources:
   - mesh-gateway.yaml
   - ingress.yaml
   - namespace.yaml
-  - prometheus.yaml
-  - service-monitor.yaml
-  - telemetry.yaml
-  - envoy-filter.yaml
-  - grafana.yaml
+  # - prometheus.yaml
+  # - service-monitor.yaml
+  # - telemetry.yaml
+  # - envoy-filter.yaml
+  # - grafana.yaml
 patches:
   # Patch the Istio ingress service so that our IP is used.
   - patch: |-
