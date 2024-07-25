@@ -226,7 +226,3 @@ The .osm.pbf file used in this setup is specific to Alberta, Canada. Therefore, 
 ## Contributing
 
 Contributions are welcome! Please submit issues and pull requests for any improvements or bug fixes. For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-This project is licensed under the GPL-3.0 and LGPL-3.0 licenses. See the [LICENSE](LICENSE) file for more details.
