@@ -4,7 +4,6 @@ resources:
   - deployment.yaml
   - service.yaml
   - virtualservice.yaml
-  - test-pod-1.yaml
 patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
