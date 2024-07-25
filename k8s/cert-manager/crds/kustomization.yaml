@@ -6,7 +6,7 @@ resources:
   - cert-manager.yaml
 
 patches:
-  # Add arguments to the cert-manager deployment to enable Workload identity
+  # Add an argument to the cert-manager deployment to enable Workload identity
   # This is needed because cert-manager needs permission to manipulate DNS records
   # to complete a DNS01 challenge. Google's workload identity links K8s accounts
   # to IAM accounts/roles.
@@ -72,18 +72,8 @@ patches:
             memory: 52Mi
 
   - target:
-      kind: Role
-      name: cert-manager:leaderelection
-      namespace: cert-manager
-    patch: |-
-      - op: replace
-        path: /metadata/namespace
-        value: cert-manager
-
-  - target:
-      kind: Role
-      name: cert-manager-cainjector:leaderelection
-      namespace: cert-manager
+      kind: "(Role|RoleBinding)"
+      name: "(cert-manager:leaderelection|cert-manager-cainjector:leaderelection)"
     patch: |-
       - op: replace
         path: /metadata/namespace
@@ -91,7 +81,7 @@ patches:
 
   # Patch the cert-manager service account so that it has permissions to use Cloud DNS:
   # https://cert-manager.io/docs/configuration/acme/dns01/google/#link-ksa-to-gsa-in-kubernetes
-  # "iam.gke.io/gcp-service-account=dns01-solver@$PROJECT_ID.iam.gserviceaccount.com"
+  #"iam.gke.io/gcp-service-account=dns01-solver@$PROJECT_ID.iam.gserviceaccount.com"
   - target:
       version: v1
       kind: ServiceAccount
