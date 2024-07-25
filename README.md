@@ -1,7 +1,3 @@
-Here is the detailed `README.md` file incorporating the provided information and focusing on the usage, features, and endpoints of OpenRouteService (ORS):
-
----
-
 # OpenRouteService (ORS) UI and API
 
 This repository contains a custom deployment of OpenRouteService (ORS) and a frontend UI for interacting with the ORS API. The setup allows users to utilize various geographic and routing services provided by ORS. Currently, the service is configured to work for the Alberta province in Canada using an Alberta-specific .osm.pbf file.
@@ -24,6 +20,10 @@ This repository contains a custom deployment of OpenRouteService (ORS) and a fro
   - [Calculating Matrix](#calculating-matrix)
   - [Snapping Coordinates](#snapping-coordinates)
 - [About ORS](#about-ors)
+  - [Supported Languages](#supported-languages)
+  - [Routing Profiles](#routing-profiles)
+  - [Key Features](#key-features)
+- [Note](#note)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -58,7 +58,7 @@ Retrieve directions between specified start and end points.
     ]
   }
   ```
-- **Profiles**: `driving-car`, `cycling-regular`, `foot-walking`, etc.
+- **Profiles**: `driving-car`, `foot-walking`, `wheelchair`, etc.
 
 ### Isochrones
 
@@ -75,7 +75,7 @@ Generate isochrones (areas of reachability) from a given location.
     "range": [time_in_seconds]
   }
   ```
-- **Profiles**: `driving-car`, `cycling-regular`, `foot-walking`, etc.
+- **Profiles**: `driving-car`, `foot-walking`, `wheelchair`, etc.
 
 ### Matrix
 
@@ -93,7 +93,7 @@ Calculate a matrix of distances and/or times between multiple points.
     "metrics": ["distance", "duration"]
   }
   ```
-- **Profiles**: `driving-car`, `cycling-regular`, `foot-walking`, etc.
+- **Profiles**: `driving-car`, `foot-walking`, `wheelchair`, etc.
 
 ### Snap
 
@@ -110,7 +110,7 @@ Snap coordinates to the nearest road network.
     "radius": radius_in_meters
   }
   ```
-- **Profiles**: `driving-car`, `cycling-regular`, `foot-walking`, etc.
+- **Profiles**: `driving-car`, `foot-walking`, `wheelchair`, etc.
 
 ### Status
 
@@ -189,7 +189,7 @@ curl -X POST "https://ors-sro.alpha.phac-aspc.gc.ca/ors/v2/snap/driving-car" -H 
 
 ### Generating Isochrones
 
-1. Enter the Lattitide and Lngitude.
+1. Enter the latitude and longitude.
 2. Click the button to generate isochrones.
 3. The reachable area will be displayed on the map and the JSON response will be shown.
 
@@ -209,6 +209,48 @@ curl -X POST "https://ors-sro.alpha.phac-aspc.gc.ca/ors/v2/snap/driving-car" -H 
 
 OpenRouteService (ORS) is a highly customizable, performant routing service written in Java. It uses a forked and edited version of GraphHopper to provide global spatial services by consuming user-generated and collaboratively collected free geographic data directly from OpenStreetMap.
 
+### Supported Languages
+
+The following languages are supported by ORS:
+- Czech (cs, cs-cz)
+- Danish (da, da-dk)
+- German (de, de-de)
+- English (en, en-us)
+- Esperanto (eo, eo-eo)
+- Spanish (es, es-es)
+- French (fr, fr-fr)
+- Greek (gr, gr-gr)
+- Hebrew (he, he-il)
+- Hungarian (hu, hu-hu)
+- Indonesian (id, id-id)
+- Italian (it, it-it)
+- Japanese (ja, ja-jp)
+- Norwegian Bokmål (nb, nb-no)
+- Nepali (ne, ne-np)
+- Dutch (nl, nl-nl)
+- Polish (pl, pl-pl)
+- Portuguese (pt, pt-pt)
+- Romanian (ro, ro-ro)
+- Russian (ru, ru-ru)
+- Turkish (tr, tr-tr)
+- Chinese (zh, zh-cn)
+
+### Routing Profiles
+
+ORS supports several routing profiles, each with specific features and limits:
+
+1. **Driving Car**:
+   - Storages: WayCategory, HeavyVehicle, WaySurfaceType, RoadAccessRestrictions
+   - Limits: Maximum distance 500,000 meters, Maximum waypoints 50
+
+2. **Foot Walking**:
+   - Storages: HillIndex, WayCategory, WaySurfaceType, TrailDifficulty
+   - Limits: Maximum distance 500,000 meters, Maximum waypoints 50
+
+3. **Wheelchair**:
+   - Storages: OsmId, WayCategory, WaySurfaceType, Wheelchair
+   - Limits: Maximum distance 500,000 meters, Maximum waypoints 50
+
 ### Key Features
 
 - **Directions Service**: Provides routing information for various transportation modes such as driving, cycling, and walking.
@@ -217,7 +259,6 @@ OpenRouteService (ORS) is a highly customizable, performant routing service writ
 - **Snapping Service**: Snaps input coordinates to the nearest road network.
 - **Export Service**: Exports the base graph for different modes of transport (available in self-hosted instances).
 - **Health and Status Endpoints**: Provides health and status information of the running ORS instance.
-
 
 ## Note
 
