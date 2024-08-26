@@ -60,9 +60,9 @@ spec:
             - name: CONTAINER_LOG_LEVEL
               value: "INFO"
             - name: XMS
-              value: "1g"
+              value: "4g"
             - name: XMX
-              value: "2g"
+              value: "8g"
             - name: ADDITIONAL_JAVA_OPTS
               value: ""
           volumeMounts:
@@ -73,10 +73,10 @@ spec:
           resources:
             requests:
               cpu: 500m
-              memory: 2.5Gi
+              memory: 4Gi
             limits:
               cpu: 1000m
-              memory: 10Gi
+              memory: 12Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
