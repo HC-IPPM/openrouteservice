@@ -26,29 +26,6 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-        # - name: download-osm-data
-        #   image: google/cloud-sdk:latest
-        #   command: ["/bin/sh", "-c"]
-        #   args:
-        #     - |
-        #       set -e
-        #       mkdir -p /home/ors/files &&
-        #       if [ -f /home/ors/files/canada-latest.osm.pbf ]; then
-        #         echo "OSM file already exists. Skipping download.";
-        #       else
-        #         echo "Downloading OSM file..." &&
-        #         gsutil cp gs://canada-osm/canada-latest.osm.pbf /home/ors/files/canada-latest.osm.pbf &&
-        #         if [ ! -f /home/ors/files/canada-latest.osm.pbf ]; then
-        #           echo "OSM file not downloaded!";
-        #           exit 1;
-        #         fi &&
-        #         echo "OSM file downloaded successfully.";
-        #       fi &&
-        #       ls -l /home/ors/files/canada-latest.osm.pbf
-        #   volumeMounts:
-        #     - name: ors-storage
-        #       mountPath: /home/ors
-      containers:
         - name: download-osm-data
           image: google/cloud-sdk:latest
           command: ["/bin/sh", "-c"]
@@ -71,34 +48,35 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-        # - name: ors-app
-        #   image: openrouteservice/openrouteservice:v8.1.1
-        #   ports:
-        #     - containerPort: 8082
-        #     - containerPort: 9001
-        #   env:
-        #     - name: REBUILD_GRAPHS
-        #       value: "False"
-        #     - name: CONTAINER_LOG_LEVEL
-        #       value: "INFO"
-        #     - name: XMS
-        #       value: "1g"
-        #     - name: XMX
-        #       value: "2g"
-        #     - name: ADDITIONAL_JAVA_OPTS
-        #       value: ""
-        #   volumeMounts:
-        #     - name: ors-storage
-        #       mountPath: /home/ors
-        #     - name: config-volume
-        #       mountPath: /home/ors/config
-        #   resources:
-        #     requests:
-        #       cpu: 500m
-        #       memory: 2.5Gi
-        #     limits:
-        #       cpu: 1000m
-        #       memory: 20Gi
+      containers:
+        - name: ors-app
+          image: openrouteservice/openrouteservice:v8.1.1
+          ports:
+            - containerPort: 8082
+            - containerPort: 9001
+          env:
+            - name: REBUILD_GRAPHS
+              value: "False"
+            - name: CONTAINER_LOG_LEVEL
+              value: "INFO"
+            - name: XMS
+              value: "1g"
+            - name: XMX
+              value: "2g"
+            - name: ADDITIONAL_JAVA_OPTS
+              value: ""
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
+            - name: config-volume
+              mountPath: /home/ors/config
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2.5Gi
+            limits:
+              cpu: 1000m
+              memory: 10Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
