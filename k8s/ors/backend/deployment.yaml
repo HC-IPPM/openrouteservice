@@ -33,18 +33,18 @@ spec:
             - |
               set -e
               mkdir -p /home/ors/files &&
-              if [ -f /home/ors/files/alberta-latest.osm.pbf ]; then
+              if [ -f /home/ors/files/canada-latest.osm.pbf ]; then
                 echo "OSM file already exists. Skipping download.";
               else
                 echo "Downloading OSM file..." &&
-                gsutil cp gs://alberta-osm/alberta-latest.osm.pbf /home/ors/files/alberta-latest.osm.pbf &&
-                if [ ! -f /home/ors/files/alberta-latest.osm.pbf ]; then
+                gsutil cp gs://canada-osm/canada-latest.osm.pbf /home/ors/files/canada-latest.osm.pbf &&
+                if [ ! -f /home/ors/files/canada-latest.osm.pbf ]; then
                   echo "OSM file not downloaded!";
                   exit 1;
                 fi &&
                 echo "OSM file downloaded successfully.";
               fi &&
-              ls -l /home/ors/files/alberta-latest.osm.pbf
+              ls -l /home/ors/files/canada-latest.osm.pbf
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
@@ -76,7 +76,7 @@ spec:
               memory: 2.5Gi
             limits:
               cpu: 1000m
-              memory: 5Gi
+              memory: 20Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
