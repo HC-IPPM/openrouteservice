@@ -50,7 +50,7 @@ spec:
               mountPath: /home/ors
         - name: build-graphs
           image: openrouteservice/openrouteservice:v8.1.1
-          command: ["/bin/sh", "-c", "chmod +x /home/ors/graphs.sh && /home/ors/graphs.sh build && touch /home/ors/graphs/.built"]
+          command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
           resources:
             requests:
               cpu: "1000m"
