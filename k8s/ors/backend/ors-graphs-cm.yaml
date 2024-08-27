@@ -7,22 +7,17 @@ data:
   graphs.sh: |
     #!/bin/bash
 
-    set -e  # Exit on error
+    set -e
 
     echo "Starting the graph build process..."
 
-    # Download the latest ORS JAR file if it doesn't exist
-    if [ ! -f /home/ors/jar/ors.jar ]; then
-      echo "Downloading ORS JAR..."
-      mkdir -p /home/ors/jar
-      curl -L -o /home/ors/jar/ors.jar https://github.com/GIScience/openrouteservice/releases/download/v8.1.1/ors-8.1.1.jar
-      echo "ORS JAR downloaded successfully."
-    else
-      echo "ORS JAR already exists. Skipping download."
-    fi
+    # Download the latest ORS JAR file
+    echo "Downloading ORS JAR..."
+    mkdir -p /home/ors/jar
+    wget -O /home/ors/jar/ors.jar https://github.com/GIScience/openrouteservice/releases/download/v8.1.1/ors-8.1.1.jar
+    echo "ORS JAR downloaded successfully."
 
-    # Build graphs using the downloaded ORS JAR
-    echo "Building graphs..."
+    # Run the build command
     java -jar /home/ors/jar/ors.jar --graphs --data-sources /home/ors/files/canada-latest.osm.pbf
 
     echo "Graphs built successfully."
