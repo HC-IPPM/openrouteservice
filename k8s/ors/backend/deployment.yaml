@@ -65,34 +65,50 @@ spec:
               mountPath: /home/ors/graphs.sh
               subPath: graphs.sh
       containers:
-        - name: ors-app
+        - name: build-graphs
           image: openrouteservice/openrouteservice:v8.1.1
-          ports:
-            - containerPort: 8082
-            - containerPort: 9001
-          env:
-            - name: REBUILD_GRAPHS
-              value: "False"
-            - name: CONTAINER_LOG_LEVEL
-              value: "INFO"
-            - name: XMS
-              value: "1g"
-            - name: XMX
-              value: "2g"
-            - name: ADDITIONAL_JAVA_OPTS
-              value: ""
+          command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "8Gi"
+            limits:
+              cpu: "2000m"
+              memory: "16Gi"
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-            - name: config-volume
-              mountPath: /home/ors/config
-          resources:
-            requests:
-              cpu: 500m
-              memory: 2.5Gi
-            limits:
-              cpu: 1000m
-              memory: 10Gi
+            - name: scripts
+              mountPath: /home/ors/graphs.sh
+              subPath: graphs.sh
+        # - name: ors-app
+        #   image: openrouteservice/openrouteservice:v8.1.1
+        #   ports:
+        #     - containerPort: 8082
+        #     - containerPort: 9001
+        #   env:
+        #     - name: REBUILD_GRAPHS
+        #       value: "False"
+        #     - name: CONTAINER_LOG_LEVEL
+        #       value: "INFO"
+        #     - name: XMS
+        #       value: "1g"
+        #     - name: XMX
+        #       value: "2g"
+        #     - name: ADDITIONAL_JAVA_OPTS
+        #       value: ""
+        #   volumeMounts:
+        #     - name: ors-storage
+        #       mountPath: /home/ors
+        #     - name: config-volume
+        #       mountPath: /home/ors/config
+        #   resources:
+        #     requests:
+        #       cpu: 500m
+        #       memory: 2.5Gi
+        #     limits:
+        #       cpu: 1000m
+        #       memory: 10Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
