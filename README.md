@@ -1,6 +1,6 @@
 # OpenRouteService (ORS) UI and API
 
-This repository contains a custom deployment of OpenRouteService (ORS) and a frontend UI for interacting with the ORS API. The setup allows users to utilize various geographic and routing services provided by ORS. Currently, the service is configured to work for the Alberta province in Canada using an Alberta-specific .osm.pbf file.
+This repository contains a custom deployment of OpenRouteService (ORS) and a frontend UI for interacting with the ORS API. The setup allows users to utilize various geographic and routing services provided by ORS. Currently, the service is configured to work for Canada.
 
 ## Table of Contents
 
@@ -260,9 +260,6 @@ ORS supports several routing profiles, each with specific features and limits:
 - **Export Service**: Exports the base graph for different modes of transport (available in self-hosted instances).
 - **Health and Status Endpoints**: Provides health and status information of the running ORS instance.
 
-## Note
-
-The .osm.pbf file used in this setup is specific to Alberta, Canada. Therefore, the routing, isochrones, and other services will only work for the Alberta province.
 
 ## Contributing
 
