@@ -93,7 +93,7 @@ spec:
               mountPath: /home/ors/config
           resources:
             requests:
-              cpu: 500m
+              cpu: 100m
               memory: 2.5Gi
             limits:
               cpu: 1000m
