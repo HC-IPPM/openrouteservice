@@ -48,27 +48,27 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-        - name: build-graphs
-          image: openrouteservice/openrouteservice:v8.1.1
-          command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
-          resources:
-            requests:
-              cpu: "1000m"
-              memory: "8Gi"
-            limits:
-              cpu: "2000m"
-              memory: "16Gi"
-          env:
-            - name: JAVA_OPTS
-              value: "-Xms4g -Xmx12g"
-          volumeMounts:
-            - name: ors-storage
-              mountPath: /home/ors
-            - name: ors-graph-script
-              mountPath: /home/ors/graphs.sh
-              subPath: graphs.sh
-            - name: ors-graph-cm
-              mountPath: /home/ors/config
+        # - name: build-graphs
+        #   image: openrouteservice/openrouteservice:v8.1.1
+        #   command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
+        #   resources:
+        #     requests:
+        #       cpu: "1000m"
+        #       memory: "8Gi"
+        #     limits:
+        #       cpu: "2000m"
+        #       memory: "16Gi"
+        #   env:
+        #     - name: JAVA_OPTS
+        #       value: "-Xms4g -Xmx12g"
+        #   volumeMounts:
+        #     - name: ors-storage
+        #       mountPath: /home/ors
+        #     - name: ors-graph-script
+        #       mountPath: /home/ors/graphs.sh
+        #       subPath: graphs.sh
+        #     - name: ors-graph-cm
+        #       mountPath: /home/ors/config
       containers:
         - name: ors-app
           image: openrouteservice/openrouteservice:v8.1.1
@@ -81,9 +81,9 @@ spec:
             - name: CONTAINER_LOG_LEVEL
               value: "INFO"
             - name: XMS
-              value: "2g"
-            - name: XMX
               value: "4g"
+            - name: XMX
+              value: "12g"
             - name: ADDITIONAL_JAVA_OPTS
               value: ""
           volumeMounts:
@@ -97,7 +97,7 @@ spec:
               memory: 2.5Gi
             limits:
               cpu: 1000m
-              memory: 10Gi
+              memory: 12Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
