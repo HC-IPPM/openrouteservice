@@ -48,22 +48,22 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-        - name: build-graphs
-          image: openrouteservice/openrouteservice:v8.1.1
-          command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
-          resources:
-            requests:
-              cpu: "1000m"
-              memory: "8Gi"
-            limits:
-              cpu: "2000m"
-              memory: "16Gi"
-          volumeMounts:
-            - name: ors-storage
-              mountPath: /home/ors
-            - name: scripts
-              mountPath: /home/ors/graphs.sh
-              subPath: graphs.sh
+        # - name: build-graphs
+        #   image: openrouteservice/openrouteservice:v8.1.1
+        #   command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
+        #   resources:
+        #     requests:
+        #       cpu: "1000m"
+        #       memory: "8Gi"
+        #     limits:
+        #       cpu: "2000m"
+        #       memory: "16Gi"
+        #   volumeMounts:
+        #     - name: ors-storage
+        #       mountPath: /home/ors
+        #     - name: scripts
+        #       mountPath: /home/ors/graphs.sh
+        #       subPath: graphs.sh
       containers:
         - name: build-graphs
           image: openrouteservice/openrouteservice:v8.1.1
