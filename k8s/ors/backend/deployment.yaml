@@ -68,7 +68,7 @@ spec:
               mountPath: /home/ors/graphs.sh
               subPath: graphs.sh
             - name: ors-graph-cm
-              mountPath: /home/ors/graph-config
+              mountPath: /home/ors/config
       containers:
         - name: ors-app
           image: openrouteservice/openrouteservice:v8.1.1
