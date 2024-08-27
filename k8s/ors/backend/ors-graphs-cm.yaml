@@ -9,7 +9,7 @@ data:
 
     echo "Starting to build graphs..."
 
-    # Actual ORS build command (make sure this path is correct)
-    java -jar /ors.jar --graphs --data-sources /home/ors/files/canada-latest.osm.pbf
+    # Command to build graphs using the downloaded ORS JAR
+    java -jar /home/ors/jar/ors.jar --graphs --data-sources /home/ors/files/canada-latest.osm.pbf
 
     echo "Graphs built successfully."

@@ -51,6 +51,18 @@ spec:
         - name: build-graphs
           image: openrouteservice/openrouteservice:v8.1.1
           command: ["/bin/sh", "-c", "/home/ors/graphs.sh build && touch /home/ors/graphs/.built"]
+          args:
+            - |
+              set -e
+              # Download the latest ORS JAR file
+              echo "Downloading ORS JAR..." &&
+              mkdir -p /home/ors/jar &&
+              curl -L -o /home/ors/jar/ors.jar https://github.com/GIScience/openrouteservice/releases/download/v8.1.1/ors-8.1.1.jar &&
+              echo "ORS JAR downloaded successfully." &&
+
+              # Run the build command
+              /home/ors/graphs.sh build &&
+              touch /home/ors/graphs/.built
           resources:
             requests:
               cpu: "1000m"
@@ -105,7 +117,7 @@ spec:
                 path: application.properties
         - name: scripts
           configMap:
-            name: ors-graphs-script
+            name: ors-graphs-cm
             items:
               - key: graphs.sh
                 path: graphs.sh
