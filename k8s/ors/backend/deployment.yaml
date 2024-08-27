@@ -22,7 +22,7 @@ spec:
       initContainers:
         - name: init-permissions
           image: busybox
-          command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs && chmod -R 777 /home/ors"]
+          command: ["sh", "-c", "mkdir -p /home/ors/config /home/ors/graph-config /home/ors/graphs /home/ors/elevation_cache /home/ors/files /home/ors/logs && chmod -R 777 /home/ors"]
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
@@ -48,23 +48,6 @@ spec:
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-        # - name: build-graphs
-        #   image: openrouteservice/openrouteservice:v8.1.1
-        #   command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
-        #   resources:
-        #     requests:
-        #       cpu: "1000m"
-        #       memory: "8Gi"
-        #     limits:
-        #       cpu: "2000m"
-        #       memory: "16Gi"
-        #   volumeMounts:
-        #     - name: ors-storage
-        #       mountPath: /home/ors
-        #     - name: scripts
-        #       mountPath: /home/ors/graphs.sh
-        #       subPath: graphs.sh
-      containers:
         - name: build-graphs
           image: openrouteservice/openrouteservice:v8.1.1
           command: ["/bin/bash", "/home/ors/graphs.sh", "build"]
@@ -75,55 +58,65 @@ spec:
             limits:
               cpu: "2000m"
               memory: "16Gi"
+          env:
+            - name: JAVA_OPTS
+              value: "-Xms4g -Xmx12g"
           volumeMounts:
             - name: ors-storage
               mountPath: /home/ors
-            - name: scripts
+            - name: ors-graph-script
               mountPath: /home/ors/graphs.sh
               subPath: graphs.sh
-            - name: config-volume
+            - name: ors-graph-cm
+              mountPath: /home/ors/graph-config
+      containers:
+        - name: ors-app
+          image: openrouteservice/openrouteservice:v8.1.1
+          ports:
+            - containerPort: 8082
+            - containerPort: 9001
+          env:
+            - name: REBUILD_GRAPHS
+              value: "False"
+            - name: CONTAINER_LOG_LEVEL
+              value: "INFO"
+            - name: XMS
+              value: "2g"
+            - name: XMX
+              value: "4g"
+            - name: ADDITIONAL_JAVA_OPTS
+              value: ""
+          volumeMounts:
+            - name: ors-storage
+              mountPath: /home/ors
+            - name: ors-config
               mountPath: /home/ors/config
-        # - name: ors-app
-        #   image: openrouteservice/openrouteservice:v8.1.1
-        #   ports:
-        #     - containerPort: 8082
-        #     - containerPort: 9001
-        #   env:
-        #     - name: REBUILD_GRAPHS
-        #       value: "False"
-        #     - name: CONTAINER_LOG_LEVEL
-        #       value: "INFO"
-        #     - name: XMS
-        #       value: "1g"
-        #     - name: XMX
-        #       value: "2g"
-        #     - name: ADDITIONAL_JAVA_OPTS
-        #       value: ""
-        #   volumeMounts:
-        #     - name: ors-storage
-        #       mountPath: /home/ors
-        #     - name: config-volume
-        #       mountPath: /home/ors/config
-        #   resources:
-        #     requests:
-        #       cpu: 500m
-        #       memory: 2.5Gi
-        #     limits:
-        #       cpu: 1000m
-        #       memory: 10Gi
+          resources:
+            requests:
+              cpu: 500m
+              memory: 2.5Gi
+            limits:
+              cpu: 1000m
+              memory: 10Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
             claimName: ors-pvc
-        - name: config-volume
+        - name: ors-config
           configMap:
             name: ors-config
             items:
               - key: application.properties
                 path: application.properties
-        - name: scripts
+        - name: ors-graph-script
           configMap:
-            name: ors-graphs-cm
+            name: ors-graph-script
             items:
               - key: graphs.sh
                 path: graphs.sh
+        - name: ors-graph-cm
+          configMap:
+            name: ors-graph-cm
+            items:
+              - key: application.properties
+                path: application.properties

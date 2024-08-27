@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ors-graphs-cm
+  name: ors-graph-script
   namespace: ors
 data:
   graphs.sh: |

@@ -7,7 +7,8 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - deployment.yaml
-  - ors-graphs-cm.yaml
+  - ors-graph-script.yaml
+  - ors-graph-cm.yaml
 
 patchesStrategicMerge:
   - |-

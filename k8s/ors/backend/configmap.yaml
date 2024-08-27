@@ -34,7 +34,7 @@ data:
     ors.engine.elevation.cache_path=/home/ors/elevation_cache
     ors.engine.profiles.car.enabled=true
     ors.engine.profiles.walking.enabled=true
-    ors.engine.profiles.wheelchair.enabled=true
+    ors.engine.profiles.wheelchair.enabled=false
     ors.endpoints.routing.enabled=true
     ors.endpoints.matrix.enabled=true
     ors.endpoints.isochrones.enabled=true

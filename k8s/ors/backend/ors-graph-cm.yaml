@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ors-graph-cm
+  namespace: ors
+data:
+  application.properties: |
+    ors.engine.source_file=/home/ors/files/canada-latest.osm.pbf
+    ors.engine.graphs_root_path=/home/ors/graphs
+    ors.engine.init_threads=4
+    ors.engine.preparation_mode=true
+    ors.engine.profiles.car.enabled=false
+    ors.engine.profiles.walking.enabled=true
+    ors.engine.profiles.wheelchair.enabled=false
