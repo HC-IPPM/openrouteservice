@@ -14,7 +14,7 @@ data:
     # Download the latest ORS JAR file
     echo "Downloading ORS JAR..."
     mkdir -p /home/ors/jar
-    wget -O /home/ors/jar/ors.jar https://github.com/GIScience/openrouteservice/releases/download/v8.1.1/ors-8.1.1.jar
+    wget -O /home/ors/jar/ors.jar https://github.com/GIScience/openrouteservice/releases/download/v8.1.2/ors.jar
     echo "ORS JAR downloaded successfully."
 
     # Run the build command
