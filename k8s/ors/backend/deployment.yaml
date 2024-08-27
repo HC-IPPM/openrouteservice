@@ -81,6 +81,8 @@ spec:
             - name: scripts
               mountPath: /home/ors/graphs.sh
               subPath: graphs.sh
+            - name: config-volume
+               mountPath: /home/ors/config
         # - name: ors-app
         #   image: openrouteservice/openrouteservice:v8.1.1
         #   ports:
