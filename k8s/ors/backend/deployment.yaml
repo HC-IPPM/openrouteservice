@@ -83,7 +83,7 @@ spec:
             - name: XMS
               value: "4g"
             - name: XMX
-              value: "12g"
+              value: "8g"
             - name: ADDITIONAL_JAVA_OPTS
               value: ""
           volumeMounts:
@@ -97,7 +97,7 @@ spec:
               memory: 2.5Gi
             limits:
               cpu: 1000m
-              memory: 12Gi
+              memory: 10Gi
       volumes:
         - name: ors-storage
           persistentVolumeClaim:
