@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ors-graphs-cm
+  namespace: ors
+data:
+  graphs.sh: |
+    #!/bin/bash
+
+    echo "Starting to build graphs..."
+
+    # Actual ORS build command (make sure this path is correct)
+    java -jar /ors.jar --graphs --data-sources /home/ors/files/canada-latest.osm.pbf
+
+    echo "Graphs built successfully."
