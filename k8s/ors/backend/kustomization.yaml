@@ -10,35 +10,43 @@ resources:
   - ors-graph-script.yaml
   - ors-graph-cm.yaml
 
-patchesStrategicMerge:
-  - |-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
       name: ors-app
       namespace: ors
-    spec:
-      template:
-        spec:
-          containers:
-            - name: istio-proxy
-              image: auto
-              resources:
-                requests:
-                  cpu: 50m
-                  memory: 100Mi
-              securityContext:
-                runAsNonRoot: true
-                allowPrivilegeEscalation: false
+    patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: ors-app
+        namespace: ors
+      spec:
+        template:
+          spec:
+            containers:
+              - name: istio-proxy
+                image: auto
+                resources:
+                  requests:
+                    cpu: 50m
+                    memory: 100Mi
+                securityContext:
+                  runAsNonRoot: true
+                  allowPrivilegeEscalation: false
 
-patchesJson6902:
   - target:
       version: v1
       kind: ServiceAccount
       name: gcs-access-sa
       namespace: ors
     patch: |-
-      - op: add
-        path: /metadata/annotations
-        value:
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: gcs-access-sa
+        namespace: ors
+        annotations:
           iam.gke.io/gcp-service-account: gcs-access-sa@phx-01j3dtrkz4x.iam.gserviceaccount.com
